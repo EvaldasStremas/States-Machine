@@ -19,6 +19,7 @@ def start_transitions(txt):
 
 def python_state_transitions(txt):
     splitted_txt = txt.split(None,1)
+    # print(splitted_txt)
     word, txt = splitted_txt if len(splitted_txt) > 1 else (txt,"")
     if word == "is":
         newState = "is_state"
@@ -54,20 +55,25 @@ def neg_state(txt):
     print("Hallo")
     return ("neg_state", "")
 
+def default_parser():
+    m = StateMachine()
+    m.add_state("Start", start_transitions)
+    m.add_state("Python_state", python_state_transitions)
+    m.add_state("is_state", is_state_transitions)
+    m.add_state("not_state", not_state_transitions)
+    m.add_state("neg_state", None, end_state=1)
+    m.add_state("pos_state", None, end_state=1)
+    m.add_state("error_state", None, end_state=1)
+    m.set_start("Start")
 
-m = StateMachine()
-m.add_state("Start", start_transitions)
-m.add_state("Python_state", python_state_transitions)
-m.add_state("is_state", is_state_transitions)
-m.add_state("not_state", not_state_transitions)
-m.add_state("neg_state", None, end_state=1)
-m.add_state("pos_state", None, end_state=1)
-m.add_state("error_state", None, end_state=1)
-m.set_start("Start")
-m.run("Python is great")
-m.run("Python is fun")
-m.run("Python is difficult")
-m.run("Perl is ugly")
-m.run("Python is bad")
-m.run("Python is dsfasdf")
-m.run("Python is great")
+    return m
+    # m.run("Python is great")
+    # m.run("Python is fun")
+    # m.run("Python is difficult")
+    # m.run("Perl is ugly")
+    # m.run("Python is bad")
+    # m.run("Python is dsfasdf")
+    # m.run("Python is great")
+
+if __name__ == "__main__":
+    default_parser()
