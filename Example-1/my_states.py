@@ -11,9 +11,10 @@ class LockedState(State):
     def on_event(self, event):
         if event == 'pin_entered':
             return UnlockedState()
+        elif event == 'enter_sleep':
+            return SleepState()
 
         return self
-
 
 class UnlockedState(State):
     """
@@ -24,6 +25,20 @@ class UnlockedState(State):
     def on_event(self, event):
         if event == 'device_locked':
             return LockedState()
+        elif event == 'enter_sleep':
+            return SleepState()
 
         return self
-# End of our states.
+
+class SleepState(State):
+    """
+    Sleep state
+    """
+
+    def on_event(self, event):
+        if event == 'device_locked':
+            return LockedState()
+        elif event == 'pin_entered':
+            return UnlockedState()
+
+        return self
