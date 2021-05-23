@@ -17,3 +17,13 @@ class NightState(State):
             return DayState()
 
         return self
+
+class InitState(State):
+
+    def on_event(self, event):
+        if event == 'enter_day_state':
+            return DayState()
+        elif event == 'enter_night_state':
+            return NightState()
+
+        return self
